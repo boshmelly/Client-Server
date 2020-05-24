@@ -1,0 +1,53 @@
+#Keep system updated
+sudo apt update
+sudo apt upgrade
+
+#Install mysql
+sudo apt install mysql-server mysql-client
+--------------------------------
+type your password for root
+----------------------------------
+
+----Server
+#install mysql
+sudo apt install -y mysql-server
+
+#for secure installation
+sudo mysql_secure_installation
+
+#One of the more common problems that users run into when trying to set up a remote MySQL database is that their MySQL instance is only configured to listen for local connections. This is MySQL’s default setting, but it won’t work for a remote database setup since MySQL must be able to listen for an external IP address where the server can be reached. To enable this, open up your mysqld.cnf file:
+
+sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+
+#Then,Navigate to the line that begins with the bind-address directive. By default, this value is set to 127.0.0.1, meaning that the server will only look for local connections. you could set this directive to a wildcard IP address, either *, ::, or 0.0.0.0:
+
+127.0.0.1 - 0.0.0.0 
+
+#Accesing the database as root to test on the server machine.
+mysql -u root -p
+#Enter mysql with 
+sudo mysql
+mysql -u root -p
+
+#Create user with privileges
+CREATE USER 'peppa'@'%' IDENTIFIED WITH mysql_native_password BY 'devops'
+
+SELECT user,authentication_string,plugin,host FROM mysql.user;
+
+FLUSH PRIVILEGES;
+Quit
+
+#restart mysql to commit changes
+sudo systemctl restart mysql
+
+#Firewall ! you can grant exclusive permission to connect database remotely with ;
+sudo ufw allow mysql
+
+#to keep it logged in every time you spin the machine.
+Sudo ufw enable
+
+mysql -u peppa -h 192.168.0.70 -p
+
+First screenshot is Server machine connecting to Mysql
+Second screenshot is Client connecting remotely.
+
